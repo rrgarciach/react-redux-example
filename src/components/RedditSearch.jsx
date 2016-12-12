@@ -2,6 +2,19 @@ import React from 'react';
 
 export default class RedditSearch extends React.Component {
 
+    loadCategories() {
+        $.ajax({
+            type: 'GET',
+            url: 'http://www.reddit.com/r/funny/.json'
+        })
+            .done((data) => {
+                console.log('data', data);
+            })
+            .fail((jqXhr) => {
+                console.log('jqXhr', jqXhr);
+            });
+    }
+
     render() {
         return <div>
             <header>
