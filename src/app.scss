@@ -52,6 +52,11 @@ $url-path: "http://localhost:8080";
   }
 }
 
+@keyframes expand {
+  from {width: 5em;}
+  to {width: 10em;}
+}
+
 body {
   font-family: 'Exo 2', sans-serif;
 
@@ -81,6 +86,13 @@ body {
           @include prefix(outline, none);
           padding: 5px 10px;
           width: 5em;
+
+          &:focus {
+            animation-name: expand;
+            animation-duration: 0.5s;
+            animation-fill-mode: both;
+          }
+
         }
 
       }
