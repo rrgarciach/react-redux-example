@@ -90,11 +90,11 @@ body {
   }
 
   main {
+    display: flex;
+    justify-content: center;
 
     ul {
       list-style: none;
-      display: flex;
-      justify-content: center;
 
       article {
         border-bottom: solid #ccc 1px;
