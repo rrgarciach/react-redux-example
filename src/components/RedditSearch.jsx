@@ -19,9 +19,19 @@ export default class RedditSearch extends React.Component {
                             <span className="img"></span>
                             <h2>Danimal1</h2>
                             <p>Spring 2014. Never forget.</p>
-                            <div>
-                                <i className="fa fa-camera-retro fa-lg"></i>
-                                <p>1693 comments</p>
+                            <div className="actions">
+                                <div className="action">
+                                    <span className="icon comments"></span>
+                                    1693 comments
+                                </div>
+                                <div className="action">
+                                    <span className="icon downloads"></span>
+                                    1693 comments
+                                </div>
+                                <div className="action">
+                                    <span className="icon favorites"></span>
+                                    1693 comments
+                                </div>
                             </div>
                         </article>
                     </li>
