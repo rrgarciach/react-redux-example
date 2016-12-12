@@ -1,0 +1,110 @@
+$primay-color: DeepSkyBlue;
+
+@mixin prefix($property, $value, $vendors: webkit moz ms o) {
+  @if $vendors {
+    @each $vendor in $vendors {
+      #{"-" + $vendor + "-" + $property}: #{$value};
+    }
+  }
+  #{$property}: #{$value};
+}
+
+/* Small screen */
+@media all and (max-width: 599px) {
+  header {
+    div {
+      width: 400px;
+    }
+  }
+}
+
+/* Medium screen */
+@media all and (min-width: 600px) {
+  header {
+    div {
+      width: 600px;
+    }
+  }
+}
+
+/* Large screen */
+@media all and (min-width: 800px) {
+  header {
+    div {
+      width: 800px;
+    }
+  }
+}
+
+body {
+  font-family: 'Exo 2', sans-serif;
+
+  header {
+    background-color: $primay-color;
+    color: white;
+    display: flex;
+    justify-content: center;
+
+    div {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      h2, form {
+        margin: 10px;
+      }
+
+      form {
+
+        input {
+          border: none;
+          @include prefix(border-radius, 1em);
+          color: $primay_color;
+          font-size: 1em;
+          @include prefix(outline, none);
+          padding: 5px 10px;
+          width: 5em;
+        }
+
+      }
+
+    }
+
+  }
+
+  main {
+
+    ul {
+      list-style: none;
+
+      article {
+        h2 {
+          color: $primay-color;
+        }
+
+        span.img {
+          float: left;
+          background-image: url("https://pbs.twimg.com/profile_images/706844157093027840/2Aan_aSU.jpg");
+          background-size: 90px 90px;
+          border: solid #ccc 2px;
+          border-radius: 90px;
+          display: block;
+          height: 90px;
+          width: 90px;
+          margin-right: 1em;
+        }
+
+        div {
+          i {
+            float: left;
+          }
+        }
+
+      }
+
+    }
+
+  }
+
+}

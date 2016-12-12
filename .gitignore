@@ -38,6 +38,3 @@ jspm_packages
 
 # Webstorm assets
 .idea
-
-# Distribution files and assets
-dist/
