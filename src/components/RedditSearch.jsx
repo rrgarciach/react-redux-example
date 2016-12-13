@@ -9,7 +9,8 @@ export default class RedditSearch extends React.Component {
         this.getPosts = _.debounce(this.getPosts.bind(this), 1000);
         this.state = {
             category: 'funny',
-            categories: List()
+            categories: List(),
+            loading: true
         };
     }
 
@@ -18,6 +19,7 @@ export default class RedditSearch extends React.Component {
     }
 
     getPosts(value) {
+        this.setState({loading: true});
         $.ajax({
             type: 'GET',
             url: `http://www.reddit.com/r/${value}/.json`
@@ -28,7 +30,7 @@ export default class RedditSearch extends React.Component {
                     let post = item.data;
                     posts = posts.push(Map(post));
                 });
-                this.setState({categories: posts});
+                this.setState({categories: posts, loading: false});
             })
             .fail(error => {
                 console.log('Error:', error);
@@ -72,7 +74,9 @@ export default class RedditSearch extends React.Component {
                     }
                 </ul>
             </main>
-            <div className="loader"></div>
+            <div className={this.state.loading ? 'modal' : ''}>
+                <div className="loader"></div>
+            </div>
         </div>
     }
 
