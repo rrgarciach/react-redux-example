@@ -110,18 +110,16 @@ body {
 
         h2 {
           color: $primay-color;
-          margin: 0.5em auto;
+          margin: 0.5em auto 0.5em 5em;
         }
 
         p {
           font-size: 1.5em;
-          margin: 0.5em auto;
+          margin: 0.5em auto 0.5em 5em;
         }
 
-        span.img {
+        .img {
           float: left;
-          background-image: url("https://pbs.twimg.com/profile_images/706844157093027840/2Aan_aSU.jpg");
-          background-size: 90px 90px;
           border: solid #ccc 2px;
           border-radius: 90px;
           display: block;
@@ -131,6 +129,7 @@ body {
         }
 
         div.actions {
+          margin-left: 7em;
 
           div.action {
             color: #ccc;
@@ -147,10 +146,10 @@ body {
               &.comments {
                 background-position: 0 0;
               }
-              &.favorites {
+              &.downs {
                 background-position: 0 16px;
               }
-              &.downloads {
+              &.ups {
                 background-position: 0 32px;
               }
 
@@ -164,6 +163,17 @@ body {
 
     }
 
+  }
+
+  div.loader {
+    //height: 100vh;
+    //width: 100vw;
+    //top: 0;
+    //bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    //background-color: red;
   }
 
 }

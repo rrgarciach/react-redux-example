@@ -1,30 +1,37 @@
 import React from 'react';
 import TextInput from './TextInput';
+import {List, Map} from 'immutable';
 
 export default class RedditSearch extends React.Component {
 
     constructor(props) {
         super(props);
-        this.loadCategories = _.debounce(this.loadCategories, 300);
+        this.getPosts = _.debounce(this.getPosts.bind(this), 1000);
         this.state = {
             category: 'funny',
-            categories: []
+            categories: List()
         };
     }
 
-    loadCategories(e) {
+    componentDidMount() {
+        this.getPosts(this.state.category);
+    }
+
+    getPosts(value) {
         $.ajax({
             type: 'GET',
-            url: `http://www.reddit.com/r/${this.state.category}/.json`
+            url: `http://www.reddit.com/r/${value}/.json`
         })
             .done(response => {
-                this.setState({categories: response.data.children});
-                console.log('response', response.data.children, response.data.children.length);
-                console.log('post', response.data.children[0].data);
-                console.log('state', this.state);
+                let posts = List();
+                response.data.children.forEach(item => {
+                    let post = item.data;
+                    posts = posts.push(Map(post));
+                });
+                this.setState({categories: posts});
             })
-            .fail((jqXhr) => {
-                console.log('jqXhr', jqXhr);
+            .fail(error => {
+                console.log('Error:', error);
             });
     }
 
@@ -33,56 +40,39 @@ export default class RedditSearch extends React.Component {
             <header>
                 <div id="header-component">
                     <h2>Reddit</h2>
-                    <h2>{this.state.category}</h2>
-                    <TextInput category={this.state.category} handleChange={this.loadCategories}></TextInput>
+                    <TextInput value={this.state.category} handleChange={this.getPosts}></TextInput>
                 </div>
             </header>
             <main>
                 <ul id="posts-component">
-                    <li>
-                        <article>
-                            <span className="img"></span>
-                            <h2>Danimal1</h2>
-                            <p>Spring 2014. Never forget.</p>
-                            <div className="actions">
-                                <div className="action">
-                                    <span className="icon comments"></span>
-                                    1693 comments
-                                </div>
-                                <div className="action">
-                                    <span className="icon downloads"></span>
-                                    1693 comments
-                                </div>
-                                <div className="action">
-                                    <span className="icon favorites"></span>
-                                    1693 comments
-                                </div>
-                            </div>
-                        </article>
-                    </li>
-                    <li>
-                        <article>
-                            <span className="img"></span>
-                            <h2>Danimal1</h2>
-                            <p>Spring 2014. Never forget.</p>
-                            <div className="actions">
-                                <div className="action">
-                                    <span className="icon comments"></span>
-                                    1693 comments
-                                </div>
-                                <div className="action">
-                                    <span className="icon downloads"></span>
-                                    1693 comments
-                                </div>
-                                <div className="action">
-                                    <span className="icon favorites"></span>
-                                    1693 comments
-                                </div>
-                            </div>
-                        </article>
-                    </li>
+                    {
+                        this.state.categories.map(post =>
+                            <li>
+                                <article>
+                                    <img src={post.get('thumbnail')} className="img" alt=""/>
+                                    <h2>{post.get('author')}</h2>
+                                    <p>{post.get('title')}</p>
+                                    <div className="actions">
+                                        <div className="action">
+                                            <span className="icon comments"></span>
+                                            {post.get('num_comments')}
+                                        </div>
+                                        <div className="action">
+                                            <span className="icon ups"></span>
+                                            {post.get('ups')}
+                                        </div>
+                                        <div className="action">
+                                            <span className="icon downs"></span>
+                                            {post.get('downs')}
+                                        </div>
+                                    </div>
+                                </article>
+                            </li>
+                        )
+                    }
                 </ul>
             </main>
+            <div className="loader"></div>
         </div>
     }
 
