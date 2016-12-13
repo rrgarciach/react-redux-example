@@ -1,14 +1,27 @@
 import React from 'react';
+import TextInput from './TextInput';
 
 export default class RedditSearch extends React.Component {
 
-    loadCategories() {
+    constructor(props) {
+        super(props);
+        this.loadCategories = _.debounce(this.loadCategories, 300);
+        this.state = {
+            category: 'funny',
+            categories: []
+        };
+    }
+
+    loadCategories(e) {
         $.ajax({
             type: 'GET',
-            url: 'http://www.reddit.com/r/funny/.json'
+            url: `http://www.reddit.com/r/${this.state.category}/.json`
         })
-            .done((data) => {
-                console.log('data', data);
+            .done(response => {
+                this.setState({categories: response.data.children});
+                console.log('response', response.data.children, response.data.children.length);
+                console.log('post', response.data.children[0].data);
+                console.log('state', this.state);
             })
             .fail((jqXhr) => {
                 console.log('jqXhr', jqXhr);
@@ -18,15 +31,14 @@ export default class RedditSearch extends React.Component {
     render() {
         return <div>
             <header>
-                <div>
+                <div id="header-component">
                     <h2>Reddit</h2>
-                    <form>
-                        <input type="text"/>
-                    </form>
+                    <h2>{this.state.category}</h2>
+                    <TextInput category={this.state.category} handleChange={this.loadCategories}></TextInput>
                 </div>
             </header>
             <main>
-                <ul>
+                <ul id="posts-component">
                     <li>
                         <article>
                             <span className="img"></span>

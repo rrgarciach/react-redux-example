@@ -52,11 +52,6 @@ $url-path: "http://localhost:8080";
   }
 }
 
-@keyframes expand {
-  from {width: 5em;}
-  to {width: 10em;}
-}
-
 body {
   font-family: 'Exo 2', sans-serif;
 
@@ -86,11 +81,10 @@ body {
           @include prefix(outline, none);
           padding: 5px 10px;
           width: 5em;
+          @include prefix(transition, all 0.25s ease);
 
           &:focus {
-            animation-name: expand;
-            animation-duration: 0.5s;
-            animation-fill-mode: both;
+            width: 15em;
           }
 
         }
@@ -107,6 +101,7 @@ body {
 
     ul {
       list-style: none;
+      padding: 0;
 
       article {
         border-bottom: solid #ccc 1px;
