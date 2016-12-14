@@ -1,11 +1,19 @@
+import jQuery from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
-import RedditSearch from './components/RedditSearch';
+import AppContainer from './containers/appContainer';
+import { configureStore } from './store/configureStore';
 
-require('./app.scss');
+require('./styles/app.scss');
+window.$ = window.jQuery = jQuery;
+
+const store = configureStore();
 
 ReactDOM.render(
-    <RedditSearch />,
+    <Provider store={store}>
+        <AppContainer />
+    </Provider>,
     document.getElementById('app')
 );
